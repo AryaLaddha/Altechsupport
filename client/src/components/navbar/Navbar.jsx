@@ -20,15 +20,8 @@ const Navbar = () => {
                     Blog
                     </a>
                 </div>
-                <div className='flex space-x-4 items-center lg:justify-center text-sm'>
-                    <div>
-                        <Link to="/login" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
-                        Login
-                        </Link>
-                    </div>
-                    <div>
-                        <Link to="/register" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-[#1e3a5f] hover:bg-white mt-4 lg:mt-0">Register</Link>
-                    </div>
+                <div>
+                    <Link to="/login" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-[#1e3a5f] hover:bg-white mt-4 lg:mt-0">Login</Link>
                 </div>
             </div>
         </nav>
