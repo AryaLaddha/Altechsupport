@@ -1,0 +1,19 @@
+# Virtual environment
+server/venv/
+server/__pycache__/
+server/*.pyc
+server/*.pyo
+
+# Node modules
+client/node_modules/
+client/build/
+
+# Logs
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
