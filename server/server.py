@@ -1,36 +1,20 @@
 from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
+from db import Database
 import psycopg2
-import psycopg2.extras  # Import this to use DictCursor
-from dotenv import load_dotenv
-import os
-
-# Load environment variables from .env file
-load_dotenv()
-
-# Now you can access environment variables
-database_url = os.getenv('DATABASE_URL')
-print(database_url)
-
-# Function to establish a database connection
-def get_db_connection():
-    conn = psycopg2.connect(database_url)
-    return conn
-
-# Function to fetch all comments
-def get_comments():
-    conn = get_db_connection()
-    with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
-        cur.execute("SELECT * FROM Comments;")
-        comments = cur.fetchall()
-    conn.close()
-    return comments
+from auth.auth import AuthManager
 
 # Flask app initialization
 app = Flask(__name__)
 
 # CORS configuration to allow requests from any origin (use specific origins in production)
 CORS(app)
+
+# Initialize the Database object
+db = Database()
+
+# Initialize the AuthManager object
+auth_manager = AuthManager(db)
 
 # Example API endpoint
 @app.route('/api/members', methods=['GET'])
@@ -43,8 +27,29 @@ def members():
 @app.route('/api/comments', methods=['GET'])
 def comments():
     try:
-        comments = get_comments()
+        comments = db.get_comments()
         return jsonify(comments)
+    except psycopg2.Error as e:
+        error_msg = f"Database error: {e}"
+        return Response(error_msg, status=500)
+
+# Endpoint for user authentication
+@app.route('/api/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    print(data)
+    email = data.get('email')
+    password = data.get('password')
+
+    if not email or not password:
+        return Response("Email and password are required.", status=400)
+
+    try:
+        user = auth_manager.authenticate_user(email, password)
+        if user:
+            return jsonify({"message": "Login successful", "user": user})
+        else:
+            return Response("Invalid credentials", status=401)
     except psycopg2.Error as e:
         error_msg = f"Database error: {e}"
         return Response(error_msg, status=500)

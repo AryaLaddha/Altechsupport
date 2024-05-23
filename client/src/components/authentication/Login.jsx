@@ -12,11 +12,31 @@ const Login = () => {
         setPassword(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Here you can implement your login logic, e.g., send the email and password to the server
-        console.log('Email:', email);
-        console.log('Password:', password);
+
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+
+            const data = await response.json();
+            console.log('Login successful:', data);
+
+            // Optionally, you can redirect the user or perform other actions here
+
+        } catch (error) {
+            console.error('Login error:', error.message);
+            // Handle error, e.g., display an error message to the user
+        }
     };
 
     return (
