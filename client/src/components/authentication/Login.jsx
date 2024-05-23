@@ -1,6 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Login = () => {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
+
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // Here you can implement your login logic, e.g., send the email and password to the server
+        console.log('Email:', email);
+        console.log('Password:', password);
+    };
+
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -9,7 +27,7 @@ const Login = () => {
                 </h2>
             </div>
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" method="POST">
+                <form className="space-y-6" onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium leading-6 text-[#1e3a5f]">
                             Email address
@@ -21,6 +39,8 @@ const Login = () => {
                             type="email"
                             autoComplete="email"
                             required
+                            value={email}
+                            onChange={handleEmailChange}
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#1e3a5f] sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -43,6 +63,8 @@ const Login = () => {
                             name="password"
                             type="password"
                             autoComplete="current-password"
+                            value={password}
+                            onChange={handlePasswordChange}
                             required
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#1e3a5f] sm:text-sm sm:leading-6"
                             />
