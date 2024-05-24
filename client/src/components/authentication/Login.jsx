@@ -31,8 +31,8 @@ const Login = () => {
             const data = await response.json();
             console.log('Login successful:', data);
 
-            // Optionally, you can redirect the user or perform other actions here
-
+            // Store the token in localStorage
+            localStorage.setItem('token', data.token);
         } catch (error) {
             console.error('Login error:', error.message);
             // Handle error, e.g., display an error message to the user
@@ -61,7 +61,7 @@ const Login = () => {
                             required
                             value={email}
                             onChange={handleEmailChange}
-                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#1e3a5f] sm:text-sm sm:leading-6"
+                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#1e3a5f] sm:text-sm sm:leading-6 p-2"
                             />
                         </div>
                     </div>
@@ -86,7 +86,7 @@ const Login = () => {
                             value={password}
                             onChange={handlePasswordChange}
                             required
-                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#1e3a5f] sm:text-sm sm:leading-6"
+                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#1e3a5f] sm:text-sm sm:leading-6 p-2"
                             />
                         </div>
                     </div>
